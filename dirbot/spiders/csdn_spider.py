@@ -8,7 +8,7 @@ from scrapy.http import Request
 class CsdnSpider(Spider):
 
     name = 'csdn'
-    allowed_domains = 'blog.csdn.net'
+    # allowed_domains = 'blog.csdn.net'
     start_urls = ['http://blog.csdn.net/']
 
     headers = {
@@ -32,8 +32,10 @@ class CsdnSpider(Spider):
 
     def parse_details(self, response):
         item = response.meta.get('item')
-        content = response.body
-        soup = BeautifulSoup(content, 'html.parser')
-        details = soup.find_all('div', attrs={'class': 'article_title'}).text
+        details = response.body
+        # csdn每个博客似乎都是定制的，无法通过制定元素抓取
+        # soup = BeautifulSoup(content, 'html.parser')
+        # details = soup.find('div', attrs={'class': 'article_title'}).text
+        print details
         item['content'] = details
-        return item
+        yield item
