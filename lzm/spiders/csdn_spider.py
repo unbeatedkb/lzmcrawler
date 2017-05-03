@@ -2,7 +2,7 @@
 
 from bs4 import BeautifulSoup
 from scrapy import Spider
-from dirbot.items import BlogItem
+from lzm.items import BlogItem
 from scrapy.http import Request
 
 class CsdnSpider(Spider):
@@ -17,7 +17,8 @@ class CsdnSpider(Spider):
     }
 
     def start_requests(self):
-        yield Request('http://blog.csdn.net/', headers=CsdnSpider.headers)
+        for i in range(344):
+            yield Request('http://blog.csdn.net/?&page=%s' % i, headers=CsdnSpider.headers)
 
     def parse(self, response):
         item = BlogItem()
@@ -36,6 +37,6 @@ class CsdnSpider(Spider):
         # csdn每个博客似乎都是定制的，无法通过制定元素抓取
         # soup = BeautifulSoup(content, 'html.parser')
         # details = soup.find('div', attrs={'class': 'article_title'}).text
-        print details
-        item['content'] = details
+        # print details
+        # item['content'] = details
         yield item

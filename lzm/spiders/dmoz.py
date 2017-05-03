@@ -1,7 +1,7 @@
 from scrapy.spiders import Spider
 from scrapy.selector import Selector
 
-from dirbot.items import BlogItem
+from lzm.items import BlogItem
 
 
 class DmozSpider(Spider):

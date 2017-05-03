@@ -1,6 +1,6 @@
 from scrapy.exceptions import DropItem
 from pymongo import MongoClient
-from dirbot import settings
+from lzm import settings
 from scrapy import log
 
 class FilterWordsPipeline(object):

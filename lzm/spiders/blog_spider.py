@@ -3,8 +3,9 @@
 from scrapy import Spider
 from scrapy.spider import BaseSpider
 from scrapy.selector import Selector
-from dirbot.items import BlogItem
+from lzm.items import BlogItem
 from scrapy.http import Request
+
 
 class BlogSpider(BaseSpider):
 
@@ -39,3 +40,4 @@ class BlogSpider(BaseSpider):
         print response
         item = response.meta('item')
         links = Selector(response).xpath('//*[@id="topics"]/div').extract()[0]
+
