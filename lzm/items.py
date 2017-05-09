@@ -21,3 +21,37 @@ class tencentnewItem(Item):
     thetype = Field()  # 新闻分类
     comments = Field()  # 新闻评论
 
+# 链家成交记录
+class LJesfItem(Item):
+
+    title = Field()
+    xiaoquname = Field()
+    introduce = Field()
+    bulidrq = Field()
+    area = Field()
+    titleprice = Field()
+    unitprice = Field()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

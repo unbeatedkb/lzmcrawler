@@ -31,3 +31,4 @@ MONGODB_COLLECTION = "blog"
 
 Redis_Ip = 'localhost'
 Redis_Port = '6379'
+

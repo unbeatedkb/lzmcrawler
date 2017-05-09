@@ -1,7 +1,7 @@
 # coding: utf-8
 
 from bs4 import BeautifulSoup
-from scrapy import Spider
+from scrapy.spiders import Spider
 from lzm.items import BlogItem
 from scrapy.http import Request
 

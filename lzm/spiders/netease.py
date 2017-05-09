@@ -50,6 +50,9 @@ class NetEaseSpider(CrawlSpider):
         thetype1 = response.xpath('//*[@id="endText"]/text()').extract()[0]
         print thetype1
 
+    def parse_items(self, response):
+
+        pass
 
 
 
