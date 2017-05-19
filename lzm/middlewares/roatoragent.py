@@ -1,21 +1,23 @@
 # coding: utf-8
 
-'''
-    用于轮换user-agent的模块
-'''
 
 from scrapy.downloadermiddlewares import useragent
-from scrapy.http import Request
 import traceback
-from lzm.middlewares.theuseragents import theuseragents
 import random
+from lzm.settings import theuseragents
 
 
-class Agentroator(useragent):
+class RoatorAgentMiddleware(useragent):
+
+    '''
+        用于轮换user-agent的中间件类
+        scrapy默认的useragent处理类是直接读取配置文件的useragent
+    '''
 
     def __init__(self):
         if not theuseragents:
-            super(Agentroator, self).__init__()
+            # 如果配置文件中未存放浏览器头，则使用scrapy默认的浏览器头
+            super(RoatorAgentMiddleware, self).__init__()
         else:
             lenth = len(theuseragents)
             self.user_agent = theuseragents[random.randint(0, lenth-1)]

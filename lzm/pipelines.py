@@ -17,6 +17,7 @@ class FilterWordsPipeline(object):
         else:
             return item
 
+
 class MongoDBPipeline(object):
 
     def __init__(self):
