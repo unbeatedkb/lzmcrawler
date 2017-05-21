@@ -78,13 +78,13 @@ Redis_Root_Proxies = 'rootproxies'
 # 定义Parser模块的parsers
 PARSERS = {
     'lzm.parser.parserbase.ParserBase': 1,
-    'lzm.parser.ljparser.LJesfParser': 2,
-    'lzm.parser.ljparser.LJtradeParser': 3,
-    'lzm.parser.ljparser.LJxiaoquParser': 4
+    'lzm.parser.ljesfparser.LJesfParser': 2,
+    'lzm.parser.ljtradeparser.LJtradeParser': 3,
+    'lzm.parser.ljxiaoquparser.LJxiaoquParser': 4
 }
 
 # 日志文件夹路径
-# LOGS_PATH = 'D:/work_code/lzmcrawler/lzm/logs/'
-LOGS_PATH = 'D:/code/lzmcrawler/lzm/logs/'
+LOGS_PATH = 'D:/work_code/lzmcrawler/lzm/logs/'
+# LOGS_PATH = 'D:/code/lzmcrawler/lzm/logs/'
 # 日志文件夹最大文件数
 MAX_LOGS = 60
