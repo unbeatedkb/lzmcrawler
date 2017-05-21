@@ -21,16 +21,14 @@ class tencentnewItem(Item):
     thetype = Field()  # 新闻分类
     comments = Field()  # 新闻评论
 
-# 链家成交记录
+# 链家二手房
 class LJesfItem(Item):
 
-    title = Field()
-    xiaoquname = Field()
-    introduce = Field()
-    bulidrq = Field()
-    area = Field()
-    titleprice = Field()
-    unitprice = Field()
+    rootpage = Field()  # 初始网页
+    theid = Field()  # 标识id
+    parsename = Field()  # 解析tag
+    collname = Field()  # 解析后存放的集合名
+    parsed = Field()  # 是否解析过的标识
 
 
 

@@ -3,6 +3,7 @@ from pymongo import MongoClient
 from lzm import settings
 from scrapy import log
 
+
 class FilterWordsPipeline(object):
     """A pipeline for filtering out items which contain certain words in their
     description"""
@@ -22,11 +23,11 @@ class MongoDBPipeline(object):
 
     def __init__(self):
         connection = MongoClient(
-            settings.MONGODB_SERVER,
+            settings.MONGODB_HOST,
             settings.MONGODB_PORT
         )
         db = connection[settings.MONGODB_DB]
-        self.collection = db[settings.MONGODB_COLLECTION]
+        self.collection = db[settings.Mongo_Root_Name]
 
     def process_item(self, item, spider):
         valid = True

@@ -5,7 +5,9 @@
 """
 
 from seeder import Seeder
+from lzm.log import getlogger
 
+logger = getlogger()
 
 class LJesfSeeder(Seeder):
 
@@ -14,9 +16,10 @@ class LJesfSeeder(Seeder):
         self.url = 'http://hz.lianjia.com/ershoufang/'
         self.name = 'LJesf'
 
-    def seed(self):
+    def seed(self, nums):
+        logger.info('add %d seeds' % nums)
         # 分析页面
-        for i in range(1, 201):
+        for i in range(1, nums+1):
             url = self.url + 'pg%d/' % i
             self.rds.sadd(self.name, url)
 
@@ -24,4 +27,5 @@ class LJesfSeeder(Seeder):
 if __name__ == '__main__':
 
     seeder = LJesfSeeder()
-    seeder.seed()
+    seeder.seed(100)
+

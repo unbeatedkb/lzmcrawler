@@ -1,5 +1,9 @@
 # coding: utf-8
 
+SPIDER_MODULES = ['lzm.spiders']
+NEWSPIDER_MODULE = 'lzm.spiders'
+DEFAULT_ITEM_CLASS = 'lzm.items.Website'
+
 # Enables scheduling storing requests queue in redis.
 # 使用scrapy_redis组件中的Scheduler
 SCHEDULER = "scrapy_redis.scheduler.Scheduler"
@@ -26,13 +30,19 @@ theuseragents = [
     'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/534.16 (KHTML, like Gecko) Chrome/10.0.648.133 Safari/534.16'
 ]
 
-SPIDER_MODULES = ['lzm.spiders']
-NEWSPIDER_MODULE = 'lzm.spiders'
-DEFAULT_ITEM_CLASS = 'lzm.items.Website'
+# 覆盖默认的request headers:
+DEFAULT_REQUEST_HEADERS = {
+  'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'Accept-Language': 'zh-CN',
+}
+
+# 覆盖Scrapy默认的浏览器头
+USER_AGENT = 'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)'
 
 # 自定义的downloader中间件
 DOWNLOADER_MIDDLEWARES = {
-    'lzm.middlewares.roatoragent.RoatorAgentMiddleware': 1
+    'lzm.downloadermiddlewares.roatoragent.RoatorAgentMiddleware': 1,
+    'lzm.downloadermiddlewares.proxies.ProxyMiddleWare': 2
 }
 
 # 可选的级别有: CRITICAL、 ERROR、WARNING、INFO、DEBUG
@@ -42,12 +52,34 @@ LOG_LEVEL = 'INFO'
 DEPTH_LIMIT = 2
 
 # Mongo连接配置
-MONGODB_SERVER = "localhost"
+MONGODB_HOST = "localhost"
 MONGODB_PORT = 27017
 MONGODB_DB = "lzm"
 MONGODB_COLLECTION = "blog"
 
 # Redis连接配置
-Redis_Ip = 'localhost'
+Redis_Host = 'localhost'
 Redis_Port = '6379'
 
+# Redis中存放待解析的文档集合名的key，set类型
+Redis_Need_Parse = 'needparse'
+# Mongo中存放未解析的网页的collname
+Mongo_Root_Name = 'rootpages'
+
+# Redis中存入验证过代理的key
+Redis_Checked_Proxies = 'checkedproxies'
+# Redis中存放爬取的代理的key
+Redis_Root_Proxies = 'rootproxies'
+
+# 定义Parser模块的parsers
+PARSERS = {
+    'lzm.parser.parserbase.ParserBase': 1,
+    'lzm.parser.ljparser.LJesfParser': 2,
+    'lzm.parser.ljparser.LJtradeParser': 3,
+    'lzm.parser.ljparser.LJxiaoquParser': 4
+}
+
+# 日志文件夹路径
+LOGS_PATH = 'D:/work_code/lzmcrawler/lzm/logs/'
+# 日志文件夹最大文件数
+MAX_LOGS = 60
