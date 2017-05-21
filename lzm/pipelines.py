@@ -1,3 +1,8 @@
+# coding: utf-8
+
+from lzm.settings import Redis_Need_Parse
+from lzm.settings import Redis_Host, Redis_Port
+import redis
 from scrapy.exceptions import DropItem
 from pymongo import MongoClient
 from lzm import settings
@@ -28,6 +33,7 @@ class MongoDBPipeline(object):
         )
         db = connection[settings.MONGODB_DB]
         self.collection = db[settings.Mongo_Root_Name]
+        self.rds = redis.Redis(Redis_Host, Redis_Port)
 
     def process_item(self, item, spider):
         valid = True
@@ -36,7 +42,10 @@ class MongoDBPipeline(object):
                 valid = False
                 raise DropItem("Missing {0}!".format(data))
         if valid:
-            self.collection.insert(dict(item))
+            theid = item['theid']
+            self.collection.update({'theid': theid}, {'$set': dict(item)}, upsert=True)
             log.msg("Question added to MongoDB database!",
                     level=log.DEBUG, spider=spider)
+            # 将待解析的id存入Redis
+            self.rds.sadd(Redis_Need_Parse, theid)
         return item

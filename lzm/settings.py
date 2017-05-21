@@ -15,7 +15,7 @@ DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
 # Store scraped item in redis for post-processing.
 # 定义项目管道
 ITEM_PIPELINES = {
-    'lzm.pipelines.FilterWordsPipeline': 1,
+    # 'lzm.pipelines.FilterWordsPipeline': 1,
     'lzm.pipelines.MongoDBPipeline': 2,
     'scrapy_redis.pipelines.RedisPipeline': 300
 }
@@ -41,8 +41,9 @@ USER_AGENT = 'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/
 
 # 自定义的downloader中间件
 DOWNLOADER_MIDDLEWARES = {
-    'lzm.downloadermiddlewares.roatoragent.RoatorAgentMiddleware': 1,
-    'lzm.downloadermiddlewares.proxies.ProxyMiddleWare': 2
+    'lzm.downloadermiddlewares.roatoragent.RoatorAgentMiddleware': 401,
+    # 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+    # 'lzm.downloadermiddlewares.proxies.ProxyMiddleWare': 700
 }
 
 # 可选的级别有: CRITICAL、 ERROR、WARNING、INFO、DEBUG
@@ -50,6 +51,9 @@ LOG_LEVEL = 'INFO'
 
 # 设置爬取深度
 DEPTH_LIMIT = 2
+
+# 设置初始的Rediskey的类型
+REDIS_START_URLS_AS_SET = True
 
 # Mongo连接配置
 MONGODB_HOST = "localhost"
@@ -80,6 +84,7 @@ PARSERS = {
 }
 
 # 日志文件夹路径
-LOGS_PATH = 'D:/work_code/lzmcrawler/lzm/logs/'
+# LOGS_PATH = 'D:/work_code/lzmcrawler/lzm/logs/'
+LOGS_PATH = 'D:/code/lzmcrawler/lzm/logs/'
 # 日志文件夹最大文件数
 MAX_LOGS = 60

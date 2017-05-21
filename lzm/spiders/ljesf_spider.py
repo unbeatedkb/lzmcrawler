@@ -33,9 +33,9 @@ class LJesfSpider(RedisSpider):
 
     def parse(self, response):
         item = LJesfItem()
-        item.rootpage = response.body
-        item.theid = md5(response.body)
-        item.parsename = self.name
-        item.collname = self.name
-        item.parsed = 0
+        item['rootpage'] = response.body
+        item['theid'] = md5(response.body)
+        item['parsename'] = self.name
+        item['collname'] = self.name
+        item['parsed'] = 0
         return item

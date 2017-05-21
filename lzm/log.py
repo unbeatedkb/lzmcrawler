@@ -15,7 +15,7 @@ logger.setLevel(logging.INFO)
 
 
 def cleanlog():
-    while len(os.listdir(LOGS_PATH)) >= 2:
+    while len(os.listdir(LOGS_PATH)) >= MAX_LOGS:
         filelist = os.listdir(LOGS_PATH)
         latesttime = 9999999999
         latestfile = None
@@ -35,6 +35,8 @@ def getlogname():
 
 
 def getlogger():
+    if not os.path.exists(LOGS_PATH):
+        os.mkdir(LOGS_PATH)
 
     # 创建一个handler，用于写入日志文件
     filename = getlogname()
