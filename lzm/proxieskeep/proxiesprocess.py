@@ -41,6 +41,7 @@ class ProxiesProcess(object):
         for k, v in self.rds.hgetall(Redis_Root_Proxies).items():
             item = {k: v}
             if checkproxy(item):
+                logger.info('checked proxy %s, %s' % (k, v))
                 self.rds.hset(Redis_Checked_Proxies, k, v)
 
     def processs(self):
