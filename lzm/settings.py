@@ -20,6 +20,9 @@ ITEM_PIPELINES = {
     'scrapy_redis.pipelines.RedisPipeline': 300
 }
 
+# 设置爬取间隔，单位为秒
+# DOWNLOAD_DELAY = 0.25
+
 # 存放常用的浏览器头
 theuseragents = [
     'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:34.0) Gecko/20100101 Firefox/34.0',
@@ -43,7 +46,7 @@ USER_AGENT = 'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/
 DOWNLOADER_MIDDLEWARES = {
     'lzm.downloadermiddlewares.roatoragent.RoatorAgentMiddleware': 401,
     # 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
-    # 'lzm.downloadermiddlewares.proxies.ProxyMiddleWare': 700
+    'lzm.downloadermiddlewares.proxies.ProxyMiddleWare': 700
 }
 
 # 可选的级别有: CRITICAL、 ERROR、WARNING、INFO、DEBUG
@@ -84,7 +87,7 @@ PARSERS = {
 }
 
 # 日志文件夹路径
-LOGS_PATH = 'D:/work_code/lzmcrawler/lzm/logs/'
-# LOGS_PATH = 'D:/code/lzmcrawler/lzm/logs/'
+# LOGS_PATH = 'D:/work_code/lzmcrawler/lzm/logs/'
+LOGS_PATH = 'D:/code/lzmcrawler/lzm/logs/'
 # 日志文件夹最大文件数
 MAX_LOGS = 60

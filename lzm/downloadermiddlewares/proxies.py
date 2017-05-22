@@ -10,7 +10,9 @@ from lzm.settings import Redis_Host, Redis_Port
 from lzm.settings import Redis_Checked_Proxies
 from random import choice
 import base64
+from lzm.log import getlogger
 
+logger = getlogger(__file__)
 
 class ProxyMiddleWare(object):
 
@@ -24,13 +26,14 @@ class ProxyMiddleWare(object):
         if not proxies:
             return
 
-        # 代理字符串结构"http://YOUR_PROXY_IP:PORT"
+        # 代理字符串结构"YOUR_PROXY_IP:PORT"
         theproxy = choice(proxies.keys())
 
         # 认证的结构USERNAME:PASSWORD
         theauth = proxies[theproxy]
 
-        request.meta['proxy'] = theproxy
+        request.meta['proxy'] = 'http://%s' % theproxy
+        logger.info('using proxy : %s' % theproxy)
         # 代理需要认证的情况
         if theauth and theauth != 1:
             encoded_auth = base64.b64encode(theauth)

@@ -10,9 +10,6 @@ from lzm.settings import LOGS_PATH
 from lzm.settings import MAX_LOGS
 import os
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
-
 
 def cleanlog():
     while len(os.listdir(LOGS_PATH)) >= MAX_LOGS:
@@ -34,7 +31,10 @@ def getlogname():
     return filname
 
 
-def getlogger():
+def getlogger(name):
+    logger = logging.getLogger(name)
+    logger.setLevel(logging.INFO)
+
     if not os.path.exists(LOGS_PATH):
         os.mkdir(LOGS_PATH)
 

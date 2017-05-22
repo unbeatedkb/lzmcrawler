@@ -30,8 +30,12 @@ def test4():
     for f in os.listdir('lzm/spiders/'):
         print type(os.path.getctime('lzm/spiders/'+f))
 
+def test5():
+    l1 = [1, 2]
+    l2 = [3, 2]
+    print l1+l2
 
-test4()
+test5()
 
 
 

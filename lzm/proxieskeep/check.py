@@ -10,7 +10,7 @@ headers = {
 }
 
 
-# 结构{127.0.0.1:5800, asd:asd}
+# 结构{'127.0.0.1:5800': 'asd:asd'}
 def checkproxy(proxy):
     if len(proxy) != 1:
         return False

@@ -5,6 +5,9 @@
 from parserbase import ParserBase
 from bs4 import BeautifulSoup
 from lzm.settings import Mongo_Root_Name
+from lzm.log import getlogger
+
+logger = getlogger(__file__)
 
 
 class LJesfParser(ParserBase):
@@ -25,30 +28,23 @@ class LJesfParser(ParserBase):
         if not mgcollname:
             return
         self.mgcoll = self.mg[mgcollname]
-        soup = BeautifulSoup(doc, 'html.parser')
+        content = doc.get('rootpage', '')
+        soup = BeautifulSoup(content, 'html.parser')
         blocks = soup.find_all('li', attrs={'class': 'clear'})
         for block in blocks:
             href = block.a.get('href')
-            print href
             title = block.find('div', attrs={'class': 'title'}).a.text
             introduce = block.find('div', attrs={'class': 'houseInfo'}).a.text
             place = block.find('div', attrs={'class': 'houseInfo'}).text
-            print title
-            print introduce
-            print place
             buildtime = block.find('div', attrs={'class': 'positionInfo'}).text
-            print buildtime
             postion = block.find('div', attrs={'class': 'positionInfo'}).a.text
-            print postion
             totalPrice = block.find('div', attrs={'class': 'totalPrice'}).span.text
-            print totalPrice
             unitPrice = block.find('div', attrs={'class': 'unitPrice'}).span.text
-            print unitPrice
-            data = {'title': title, 'introduce': introduce, 'place': place, 'buildtime': buildtime,
+            data = {'theid': theid, 'title': title, 'introduce': introduce, 'place': place, 'buildtime': buildtime,
                     'postion': postion, 'totalPrice': totalPrice, 'unitPrice': unitPrice}
             # 将所得数据存入mongo
-            self.mgcoll.update({'theid': theid}, {'$set': data}, upsert=True)
-            print data
+            self.mgcoll.update({'href': href}, {'$set': data}, upsert=True)
+            logger.info('parsed data, href : %s ' % href)
         self.mgcoll_root = self.mg[Mongo_Root_Name]
         self.mgcoll_root.update({'theid': theid}, {'$set': {'parsed': 1}})
 

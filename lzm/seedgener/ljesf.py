@@ -7,7 +7,7 @@
 from seeder import Seeder
 from lzm.log import getlogger
 
-logger = getlogger()
+logger = getlogger(__file__)
 
 class LJesfSeeder(Seeder):
 

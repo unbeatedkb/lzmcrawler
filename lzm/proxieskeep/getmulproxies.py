@@ -32,6 +32,7 @@ class get_proxies(object):
             proxy = '%s:%s' % (ip, port)
             print proxy
             self.proxies.append(proxy)
+
 if __name__ == '__main__':
     gp = get_proxies()
     gp.get_proxies()

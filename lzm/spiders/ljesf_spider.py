@@ -7,8 +7,10 @@
 from scrapy_redis.spiders import RedisSpider
 from lzm.items import LJesfItem
 import hashlib
-import hashlib
-import types
+from lzm.log import getlogger
+
+logger = getlogger(__file__)
+
 
 def md5(s):
     try:
@@ -32,6 +34,7 @@ class LJesfSpider(RedisSpider):
         super(LJesfSpider, self).__init__(*args, **kwargs)
 
     def parse(self, response):
+        logger.info('get response from web %s' % response.url)
         item = LJesfItem()
         item['rootpage'] = response.body
         item['theid'] = md5(response.body)
