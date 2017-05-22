@@ -31,9 +31,10 @@ def test4():
         print type(os.path.getctime('lzm/spiders/'+f))
 
 def test5():
-    l1 = [1, 2]
-    l2 = [3, 2]
-    print l1+l2
+    l = (2, 3, 4, 5)
+    print l.pop()
+    print l
+
 
 test5()
 

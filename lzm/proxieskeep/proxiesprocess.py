@@ -6,7 +6,7 @@ from getallproxies import getproxies
 import redis
 from lzm.settings import Redis_Host, Redis_Port
 from lzm.settings import Redis_Checked_Proxies, Redis_Root_Proxies
-from check import checkproxy
+from check import checkproxies
 from lzm.log import getlogger
 
 logger = getlogger(__file__)
@@ -18,7 +18,7 @@ logger = getlogger(__file__)
 '''
 
 
-'''获取代理，从网站的代理获取代理存入Redis'''
+# 获取代理
 def fromproxies():
     rds = redis.Redis(Redis_Host, Redis_Port)
     while True:
@@ -35,26 +35,45 @@ class ProxiesProcess(object):
     def __init__(self):
         self.rds = redis.Redis(Redis_Host, Redis_Port)
 
-    '''检查代理，从Redis取出代理，进行验证，将验证通过的代理存入Redis的可用代理的key中'''
-    def checkproxies(self):
-        # print 'what i want to do is check proxieskeep'
+    # 检查代理质量
+    def checktheproxies(self):
+        if not self.rds.hlen(Redis_Root_Proxies):
+            time.sleep(20)
+            return
+        i = 0
+        checklist = []
         for k, v in self.rds.hgetall(Redis_Root_Proxies).items():
+            if len(checklist) == 8:
+                checkproxies(checklist)
+                i = 0
+                checklist = []
             item = {k: v}
-            if checkproxy(item):
-                logger.info('checked proxy %s, %s' % (k, v))
-                self.rds.hset(Redis_Checked_Proxies, k, v)
+            checklist.append(item)
+            # if checkproxy(item):
+            #     logger.info('checked proxy %s, %s' % (k, v))
+            #     self.rds.hset(Redis_Checked_Proxies, k, v)
+            # else:
+            #     logger.info('bad proxy %s, %s' % (k, v))
+            self.rds.hdel(Redis_Root_Proxies, k)
+            i += 1
 
     def processs(self):
+
         # 开启一个进程新增代理
         p1 = Process(target=fromproxies, args=())
         p1.start()
-        # 设置常驻进程检查代理的有效性
+
         while True:
+
+            # 设置常驻进程检查代理的有效性
             # 当可用的代理数量充足时设置休眠
             if self.rds.hlen(Redis_Checked_Proxies) > 15:
+                logger.info('enough checked proxies, wait.....')
                 time.sleep(60)
+                continue
+
             # 检查代理的有效性
-            self.checkproxies()
+            self.checktheproxies()
 
 if __name__ == '__main__':
 
