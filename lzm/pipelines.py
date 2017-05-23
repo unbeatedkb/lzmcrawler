@@ -7,6 +7,9 @@ from scrapy.exceptions import DropItem
 from pymongo import MongoClient
 from lzm import settings
 from scrapy import log
+from lzm.log import getlogger
+
+logger = getlogger(__file__)
 
 
 class FilterWordsPipeline(object):
@@ -40,12 +43,13 @@ class MongoDBPipeline(object):
         for data in item:
             if not data:
                 valid = False
-                raise DropItem("Missing {0}!".format(data))
+                break
         if valid:
             theid = item['theid']
             self.collection.update({'theid': theid}, {'$set': dict(item)}, upsert=True)
-            log.msg("Question added to MongoDB database!",
-                    level=log.DEBUG, spider=spider)
+            # log.msg("Question added to MongoDB database!",
+            #         level=log.DEBUG, spider=spider)
             # 将待解析的id存入Redis
+            logger.info('save one page, theid is %s' % theid)
             self.rds.sadd(Redis_Need_Parse, theid)
         return item

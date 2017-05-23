@@ -30,6 +30,8 @@ class LJesfParser(ParserBase):
         self.mgcoll = self.mg[mgcollname]
         content = doc.get('rootpage', '')
         soup = BeautifulSoup(content, 'html.parser')
+        baseurl = doc.get('baseurl', '')
+
         blocks = soup.find_all('li', attrs={'class': 'clear'})
         for block in blocks:
             href = block.a.get('href')
@@ -40,13 +42,12 @@ class LJesfParser(ParserBase):
             postion = block.find('div', attrs={'class': 'positionInfo'}).a.text
             totalPrice = block.find('div', attrs={'class': 'totalPrice'}).span.text
             unitPrice = block.find('div', attrs={'class': 'unitPrice'}).span.text
-            data = {'theid': theid, 'title': title, 'introduce': introduce, 'place': place, 'buildtime': buildtime,
+            data = {'theid': theid, 'baseurl': baseurl, 'title': title, 'introduce': introduce, 'place': place, 'buildtime': buildtime,
                     'postion': postion, 'totalPrice': totalPrice, 'unitPrice': unitPrice}
+
             # 将所得数据存入mongo
             self.mgcoll.update({'href': href}, {'$set': data}, upsert=True)
             logger.info('parsed data, href : %s ' % href)
-        self.mgcoll_root = self.mg[Mongo_Root_Name]
-        self.mgcoll_root.update({'theid': theid}, {'$set': {'parsed': 1}})
 
 
 '''-----test part-----'''

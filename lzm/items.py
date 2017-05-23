@@ -6,6 +6,7 @@ from scrapy.item import Item, Field
 # 链家成交记录
 class LJtradeItem(Item):
 
+    baseurl = Field()  # 初始链接
     rootpage = Field()  # 初始网页
     theid = Field()  # 标识id
     parsename = Field()  # 解析tag
@@ -16,6 +17,7 @@ class LJtradeItem(Item):
 # 链家小区
 class LJxiaoquItem(Item):
 
+    baseurl = Field()  # 初始链接
     rootpage = Field()  # 初始网页
     theid = Field()  # 标识id
     parsename = Field()  # 解析tag
@@ -45,12 +47,23 @@ class tencentnewItem(Item):
 # 链家二手房
 class LJesfItem(Item):
 
+    baseurl = Field()  # 初始链接
     rootpage = Field()  # 初始网页
     theid = Field()  # 标识id
     parsename = Field()  # 解析tag
     collname = Field()  # 解析后存放的集合名
     parsed = Field()  # 是否解析过的标识
 
+
+# 创业邦事件
+class CYeventItem(Item):
+
+    baseurl = Field()  # 初始链接
+    rootpage = Field()  # 初始网页
+    theid = Field()  # 标识id
+    parsename = Field()  # 解析tag
+    collname = Field()  # 解析后存放的集合名
+    parsed = Field()  # 是否解析过的标识
 
 
 

@@ -2,7 +2,11 @@
 
 SPIDER_MODULES = ['lzm.spiders']
 NEWSPIDER_MODULE = 'lzm.spiders'
-DEFAULT_ITEM_CLASS = 'lzm.items.Website'
+# DEFAULT_ITEM_CLASS = 'lzm.items.Website'
+
+# drivers驱动路径
+PHANTOMJS_PATH = 'D:/work_code/lzmcrawler/drivers/phantomjs.exe'
+CHROME_PATH = 'D:/work_code/lzmcrawler/drivers/chromedriver.exe'
 
 # Enables scheduling storing requests queue in redis.
 # 使用scrapy_redis组件中的Scheduler
@@ -45,9 +49,16 @@ USER_AGENT = 'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/
 # 自定义的downloader中间件
 DOWNLOADER_MIDDLEWARES = {
     'lzm.downloadermiddlewares.roatoragent.RoatorAgentMiddleware': 401,
+    'lzm.downloadermiddlewares.page_error_check.PageErrorCheckMiddleware': 520,
     # 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
     'lzm.downloadermiddlewares.proxies.ProxyMiddleWare': 700
 }
+
+# 默认的被封关键词
+DEFAULT_PAGE_CHECKER_WORDS = [
+    '您的请求过于频繁',
+    "未知错误，请稍后再试"
+]
 
 # 可选的级别有: CRITICAL、 ERROR、WARNING、INFO、DEBUG
 LOG_LEVEL = 'INFO'
@@ -61,7 +72,7 @@ REDIS_START_URLS_AS_SET = True
 # Mongo连接配置
 MONGODB_HOST = "localhost"
 MONGODB_PORT = 27017
-MONGODB_DB = "lzm"
+MONGODB_DB = "lzm_test"
 MONGODB_COLLECTION = "blog"
 
 # Redis连接配置
@@ -87,7 +98,7 @@ PARSERS = {
 }
 
 # 日志文件夹路径
-# LOGS_PATH = 'D:/work_code/lzmcrawler/lzm/logs/'
-LOGS_PATH = 'D:/code/lzmcrawler/lzm/logs/'
+LOGS_PATH = 'D:/work_code/lzmcrawler/lzm/logs/'
+# LOGS_PATH = 'D:/code/lzmcrawler/lzm/logs/'
 # 日志文件夹最大文件数
 MAX_LOGS = 60

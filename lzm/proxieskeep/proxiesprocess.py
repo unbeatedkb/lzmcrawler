@@ -26,6 +26,7 @@ def fromproxies():
             # 未验证的代理数量超过100则休眠20分钟
             logger.info('enough proxies, sleep 20 mins')
             time.sleep(20*60)
+            continue
         logger.info('get free proxies from web')
         getproxies()
 
@@ -49,11 +50,6 @@ class ProxiesProcess(object):
                 checklist = []
             item = {k: v}
             checklist.append(item)
-            # if checkproxy(item):
-            #     logger.info('checked proxy %s, %s' % (k, v))
-            #     self.rds.hset(Redis_Checked_Proxies, k, v)
-            # else:
-            #     logger.info('bad proxy %s, %s' % (k, v))
             self.rds.hdel(Redis_Root_Proxies, k)
             i += 1
 

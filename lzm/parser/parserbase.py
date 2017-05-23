@@ -41,8 +41,8 @@ class ParserBase(object):
         self.detailparse(doc)
         # 修改解析标识
         theid = doc.get('theid')
-        self.mgcoll = self.mg[Mongo_Root_Name]
-        self.mgcoll.update({'theid': theid}, {'$set': {'parsed': '1'}})
+        self.mgcoll_root = self.mg[Mongo_Root_Name]
+        self.mgcoll_root.update({'theid': theid}, {'$set': {'parsed': '1'}})
 
     # 具体的解析函数
     def detailparse(self, doc):

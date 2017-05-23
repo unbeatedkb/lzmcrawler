@@ -10,7 +10,7 @@ class LJtradeSeeder(Seeder):
 
     def __init__(self):
         super(LJtradeSeeder, self).__init__()
-        self.url = 'http://hz.lianjia.com/trade/'
+        self.url = 'http://hz.lianjia.com/chengjiao/'
         self.name = 'LJtrade'
 
     def seed(self, nums):

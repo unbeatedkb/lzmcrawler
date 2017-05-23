@@ -9,6 +9,7 @@ from lzm.log import getlogger
 
 logger = getlogger(__file__)
 
+
 class LJesfSeeder(Seeder):
 
     def __init__(self):
