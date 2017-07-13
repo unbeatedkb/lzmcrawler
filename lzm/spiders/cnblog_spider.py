@@ -5,13 +5,29 @@ from scrapy.spiders import BaseSpider
 from scrapy.selector import Selector
 from lzm.items import BlogItem
 from scrapy.http import Request
+from scrapy_redis.spiders import RedisSpider
+import hashlib
 
 
-class BlogSpider(Spider):
+def md5(s):
+    try:
+        s = str(s)
+        m = hashlib.md5()
+        m.update(s)
+        return m.hexdigest()
+    except:
+        return ''
 
-    name = 'blog'
-    allowed_domains = 'cnblogs.com'
-    start_urls = ['https://www.cnblogs.com/cate/python/']
+
+class CnBlogSpider(RedisSpider):
+
+    name = 'CnBlog'
+    redis_key = 'CnBlog'
+
+    def __init__(self, *args, **kwargs):
+        domain = kwargs.pop('domain', '')
+        self.allowed_domains = filter(None, domain.split(','))
+        super(CnBlogSpider, self).__init__(*args, **kwargs)
 
     '''
         parse接收response，分两种情况。
@@ -32,12 +48,5 @@ class BlogSpider(Spider):
             print item['url']
             print item['description']
 
-            yield Request(url=blog_url, meta={'item': item}, callback=self.parse_item)
-
-
-    def parse_item(self, response):
-
-        print response
-        item = response.meta('item')
-        links = Selector(response).xpath('//*[@id="topics"]/div').extract()[0]
+            return item
 

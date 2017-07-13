@@ -47,9 +47,6 @@ class MongoDBPipeline(object):
         if valid:
             theid = item['theid']
             self.collection.update({'theid': theid}, {'$set': dict(item)}, upsert=True)
-            # log.msg("Question added to MongoDB database!",
-            #         level=log.DEBUG, spider=spider)
-            # 将待解析的id存入Redis
             logger.info('save one page, theid is %s' % theid)
             self.rds.sadd(Redis_Need_Parse, theid)
         return item

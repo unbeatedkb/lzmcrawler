@@ -98,7 +98,7 @@ PARSERS = {
 }
 
 # 日志文件夹路径
-LOGS_PATH = 'D:/work_code/lzmcrawler/lzm/logs/'
-# LOGS_PATH = 'D:/code/lzmcrawler/lzm/logs/'
+# LOGS_PATH = 'D:/work_code/lzmcrawler/lzm/logs/'
+LOGS_PATH = 'D:/code/lzmcrawler/lzm/logs/'
 # 日志文件夹最大文件数
 MAX_LOGS = 60
